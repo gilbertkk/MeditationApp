@@ -1,31 +1,187 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Image,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { COLORS, icons, SHADOWS, SIZES } from "../constants";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .min(3, "Username must be at least 3 characters")
+    .required("Username is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <Pressable
-        onPress={() => {
-          navigation.navigate("Login");
+    <SafeAreaView style={styles.container}>
+      <View style={styles.logoSection}>
+        <View style={styles.logoContainer}>
+          <Image source={icons.menu} style={styles.image} />
+        </View>
+      </View>
+      <Formik
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+          comfirmPassword: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          console.log(values);
         }}
       >
-        <Text style={styles.text}>SignUpScreen</Text>
-      </Pressable>
-    </View>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
+          /* Form Section */
+          <View style={styles.formSection}>
+            {/* Username field */}
+            <View style={{ marginBottom: 10 }}>
+              <TextInput
+                style={styles.input}
+                value={values.username}
+                onChangeText={handleChange("username")}
+                onBlur={handleBlur("username")}
+                placeholder="Username"
+              />
+              {touched.username && errors.username && (
+                <Text style={styles.error}>{errors.username}</Text>
+              )}
+            </View>
+            {/* Email field */}
+            <View style={{ marginBottom: 10 }}>
+              <TextInput
+                style={styles.input}
+                value={values.email}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                placeholder="Email"
+              />
+              {touched.email && errors.email && (
+                <Text style={styles.error}>{errors.email}</Text>
+              )}
+            </View>
+            {/* Password field */}
+            <View style={{ marginBottom: 10 }}>
+              <TextInput
+                style={styles.input}
+                value={values.password}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
+                placeholder="Password"
+                secureTextEntry
+              />
+              {touched.password && errors.password && (
+                <Text style={styles.error}>{errors.password}</Text>
+              )}
+            </View>
+            {/* Sign Up Button */}
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLORS.primary,
+                padding: 15,
+                borderRadius: 5,
+                alignItems: "center",
+                marginBottom: 10,
+              }}
+              onPress={handleSubmit}
+              testID="handleRegister"
+            >
+              <Text style={{ color: "#fff", fontWeight: "bold" }}>Sign Up</Text>
+            </TouchableOpacity>
+
+            {/* Login link line */}
+            <View style={styles.loginLinkWrapper}>
+              <Text style={styles.linkLine}>
+                Already have an account? <Text style={styles.link}>Login</Text>
+              </Text>
+            </View>
+          </View>
+        )}
+      </Formik>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    padding: 20,
+    //backgroundColor: "red",
   },
-  text: {
-    fontSize: 32,
-    fontWeight: "bold",
+  logoSection: {
+    justifyContent: "center",
+    width: "100%",
+    height: "20%",
+    //backgroundColor: "yellow",
+  },
+  logoContainer: {
+    padding: 20,
+    marginLeft: "auto",
+    marginRight: "auto",
+    backgroundColor: "#f0f0f0",
+    borderRadius: 50,
+    height: 90,
+    ...SHADOWS.medium,
+    shadowColor: COLORS.white,
+    //backgroundColor: "green",
+  },
+  image: {
+    width: 50,
+    height: 50,
+  },
+  formSection: {
+    width: "100%",
+    height: "70%",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    //backgroundColor: "gray"
+  },
+  input: {
+    borderColor: "#ccc",
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  error: {
+    color: "red",
+    fontSize: SIZES.xSmall,
+  },
+  loginLinkWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  linkLine: {
+    fontSize: SIZES.small,
+  },
+  link: {
+    color: "#0000ff",
   },
 });
 
