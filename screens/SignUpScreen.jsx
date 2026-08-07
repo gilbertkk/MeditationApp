@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -41,7 +42,6 @@ const SignUpScreen = () => {
           username: "",
           email: "",
           password: "",
-          comfirmPassword: "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
@@ -116,8 +116,15 @@ const SignUpScreen = () => {
             {/* Login link line */}
             <View style={styles.loginLinkWrapper}>
               <Text style={styles.linkLine}>
-                Already have an account? <Text style={styles.link}>Login</Text>
+                Already have an account?
               </Text>
+              <Pressable
+                  onPress={() => {
+                    navigation.navigate("Login");
+                  }}
+                >
+                  <Text style={styles.link}>Login</Text>
+                </Pressable>
             </View>
           </View>
         )}
@@ -182,6 +189,8 @@ const styles = StyleSheet.create({
   },
   link: {
     color: "#0000ff",
+    fontSize: SIZES.small,
+    marginLeft: 5,
   },
 });
 
