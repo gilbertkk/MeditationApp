@@ -47,7 +47,6 @@ const LoginScreen = () => {
             password: values.password,
             token: "sample-token",
           };
-          console.log("userDetails", userDetails);
           try {
             const detailsDatafromSignup =
               await AsyncStorage.getItem("userDetails");
