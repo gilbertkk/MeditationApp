@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -40,8 +41,32 @@ const LoginScreen = () => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          const userDetails = {
+            email: values.email,
+            password: values.password,
+            token: "sample-token",
+          };
+          console.log("userDetails", userDetails);
+          try {
+            const detailsDatafromSignup =
+              await AsyncStorage.getItem("userDetails");
+            if (detailsDatafromSignup) {
+              const parsedDetails = JSON.parse(detailsDatafromSignup);
+              if (
+                userDetails.email === parsedDetails.email &&
+                userDetails.password === parsedDetails.password
+              ) {
+                navigation.navigate("Home");
+              } else {
+                Alert.alert("Login", "Incorrect email or password.");
+              }
+            } else {
+              Alert.alert("Error", "No user details found in AsyncStorage.");
+            }
+          } catch (error) {
+            console.error("Error accessing AsyncStorage", error);
+          }
         }}
       >
         {({
@@ -120,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
-    //backgroundColor: "red",
+    backgroundColor: COLORS.lightWhite,
   },
   logoSection: {
     justifyContent: "center",
@@ -159,11 +184,12 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    fontSize: SIZES.xSmall,
+    fontSize: SIZES.small,
   },
   signupLinkWrapper: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   linkLine: {
     fontSize: SIZES.small,

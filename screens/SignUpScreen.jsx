@@ -44,8 +44,20 @@ const SignUpScreen = () => {
           password: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          const userDetails = {
+            username: values.username,
+            email: values.email,
+            password: values.password,
+            token: "sample-token",
+          };
+          await AsyncStorage.setItem(
+            "userDetails",
+            JSON.stringify(userDetails),
+          );
+          console.log("User Sign up:", userDetails);
+
+          navigation.navigate("Login");
         }}
       >
         {({
@@ -115,16 +127,14 @@ const SignUpScreen = () => {
 
             {/* Login link line */}
             <View style={styles.loginLinkWrapper}>
-              <Text style={styles.linkLine}>
-                Already have an account?
-              </Text>
+              <Text style={styles.linkLine}>Already have an account?</Text>
               <Pressable
-                  onPress={() => {
-                    navigation.navigate("Login");
-                  }}
-                >
-                  <Text style={styles.link}>Login</Text>
-                </Pressable>
+                onPress={() => {
+                  navigation.navigate("Login");
+                }}
+              >
+                <Text style={styles.link}>Login</Text>
+              </Pressable>
             </View>
           </View>
         )}
@@ -139,7 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
-    //backgroundColor: "red",
+    backgroundColor: COLORS.lightWhite,
   },
   logoSection: {
     justifyContent: "center",
@@ -178,11 +188,12 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    fontSize: SIZES.xSmall,
+    fontSize: SIZES.small,
   },
   loginLinkWrapper: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   linkLine: {
     fontSize: SIZES.small,
