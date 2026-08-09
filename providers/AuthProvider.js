@@ -1,0 +1,48 @@
+import { createContext, useEffect, useState } from "react";
+import AsyncStorage, {
+  useAsyncStorage,
+} from "@react-native-async-storage/async-storage";
+
+export const AuthContext = createContext();
+
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const login = (userDetails) => {
+    setUser(userDetails);
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
+  const checkLogin = async () => {
+    try {
+      setIsLoading(true);
+      const userDetails = await AsyncStorage.getItem("userDetails");
+      if (userDetails) {
+        setUser(JSON.parse(userDetails));
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(
+        "AuthProvider: Failed to get user details from local storage",
+        error,
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+  return (
+    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthProvider;

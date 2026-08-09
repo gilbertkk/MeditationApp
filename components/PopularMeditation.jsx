@@ -23,7 +23,7 @@ const PopularMeditation = () => {
   const [selectedMeditation, setselectedMeditation] = useState();
 
   const handleCardPress = (item) => {
-    navigation.navigate("MeditationDetails", { itemId: item.id });
+    navigation.navigate("MeditationDetails", { id: item.id });
     setselectedMeditation(item.id);
   };
 
@@ -32,7 +32,10 @@ const PopularMeditation = () => {
       style={styles.container(selectedMeditation, item)}
       onPress={() => handleCardPress(item)}
     >
-      <TouchableOpacity style={styles.logoContainer(selectedMeditation, item)}>
+      <TouchableOpacity
+        style={styles.logoContainer(selectedMeditation, item)}
+        onPress={() => handleCardPress(item)}
+      >
         <Image
           source={{ uri: item?.image }}
           resizeMode="cover"

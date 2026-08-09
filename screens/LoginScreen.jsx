@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Image,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Pressable,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COLORS, icons, SHADOWS, SIZES } from "../constants";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { AuthContext } from "../providers/AuthProvider";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -27,6 +29,15 @@ const validationSchema = Yup.object({
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const { login, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,6 +67,7 @@ const LoginScreen = () => {
                 userDetails.email === parsedDetails.email &&
                 userDetails.password === parsedDetails.password
               ) {
+                login(userDetails);
                 navigation.navigate("Home");
               } else {
                 Alert.alert("Login", "Incorrect email or password.");
