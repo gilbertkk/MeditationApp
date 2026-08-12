@@ -24,7 +24,7 @@ const ScreenHeaderBtn = ({ detailPage, handleShare }) => {
           <>
             <TouchableOpacity
               style={styles.btnContainer}
-              onPress={() => navigation.navigate("Favourites")}
+              onPress={() => navigation.navigate("Settings")}
             >
               <Image source={icons.settings} style={styles.image} />
             </TouchableOpacity>

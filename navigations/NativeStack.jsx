@@ -7,6 +7,9 @@ import { AuthContext } from "../providers/AuthProvider";
 import { useContext } from "react";
 import { ActivityIndicator } from "react-native";
 import Favourites from "../screens/settings/Favourites";
+import Setting from "../screens/settings/Setting";
+import DailyReminders from "../screens/settings/DailyReminders";
+import Settings from "../screens/Settings";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +34,10 @@ const NativeStack = () => {
             name="MeditationDetails"
             component={MeditationDetails}
           />
+          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="ThemeChange" component={Setting} />
           <Stack.Screen name="Favourites" component={Favourites} />
+          <Stack.Screen name="DailyReminders" component={DailyReminders} />
         </>
       )}
     </Stack.Navigator>
