@@ -3,7 +3,7 @@ import { COLORS, SIZES, icons } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
 const ScreenHeaderBtn = ({ detailPage, handleShare }) => {
-  const navaigation = useNavigation();
+  const navigation = useNavigation();
   console.log(detailPage);
   return (
     <>
@@ -24,7 +24,7 @@ const ScreenHeaderBtn = ({ detailPage, handleShare }) => {
           <>
             <TouchableOpacity
               style={styles.btnContainer}
-              onPress={() => navigation.navigate("Settings")}
+              onPress={() => navigation.navigate("Favourites")}
             >
               <Image source={icons.settings} style={styles.image} />
             </TouchableOpacity>

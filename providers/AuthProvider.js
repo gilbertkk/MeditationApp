@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const login = (userDetails) => {
     setUser(userDetails);
@@ -24,7 +24,6 @@ const AuthProvider = ({ children }) => {
       if (userDetails) {
         setUser(JSON.parse(userDetails));
       }
-      setIsLoading(false);
     } catch (error) {
       console.log(
         "AuthProvider: Failed to get user details from local storage",

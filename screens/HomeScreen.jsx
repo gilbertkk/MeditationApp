@@ -7,6 +7,7 @@ import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 import Welcome from "../components/Welcome";
 import PopularMeditation from "../components/PopularMeditation";
 import DailyMeditation from "../components/DailyMeditation";
+import DailyQuote from "../components/DailyQuote";
 
 const HomeScreen = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -41,6 +42,7 @@ const HomeScreen = () => {
           testID="screensDisplay"
         >
           <Welcome userDetails={userDetails} />
+          <DailyQuote />
           <PopularMeditation />
           <DailyMeditation />
         </View>

@@ -6,6 +6,7 @@ import MeditationDetails from "../Meditation-details/[id]";
 import { AuthContext } from "../providers/AuthProvider";
 import { useContext } from "react";
 import { ActivityIndicator } from "react-native";
+import Favourites from "../screens/settings/Favourites";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ const NativeStack = () => {
             name="MeditationDetails"
             component={MeditationDetails}
           />
+          <Stack.Screen name="Favourites" component={Favourites} />
         </>
       )}
     </Stack.Navigator>
