@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import useFetch from "../hook/useFetch";
 
-const PopularMeditation = () => {
+const PopularMeditation = ({ isDarkMode }) => {
   const navigation = useNavigation();
   //   const { data, isLoading, error } = useFetch("search", {
   //     query: "React developer",
@@ -68,7 +68,14 @@ const PopularMeditation = () => {
     <>
       <View style={styles.container} testID="popularContainer">
         <View style={styles.header} testID="popularHeader">
-          <Text style={styles.headerTitle}>Popular Meditations</Text>
+          <Text
+            style={[
+              styles.headerTitle,
+              { color: isDarkMode ? COLORS.lightWhite : COLORS.darkText },
+            ]}
+          >
+            Popular Meditations
+          </Text>
           <TouchableOpacity></TouchableOpacity>
         </View>
         <View style={styles.cardsContainer}>

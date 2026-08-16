@@ -8,6 +8,7 @@ import Welcome from "../components/Welcome";
 import PopularMeditation from "../components/PopularMeditation";
 import DailyMeditation from "../components/DailyMeditation";
 import DailyQuote from "../components/DailyQuote";
+import { useTheme } from "../providers/ThemeProvider";
 
 const HomeScreen = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -30,8 +31,16 @@ const HomeScreen = () => {
     }
   };
 
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
+      }}
+    >
       <ScreenHeaderBtn />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -41,10 +50,10 @@ const HomeScreen = () => {
           }}
           testID="screensDisplay"
         >
-          <Welcome userDetails={userDetails} />
-          <DailyQuote />
-          <PopularMeditation />
-          <DailyMeditation />
+          <Welcome userDetails={userDetails} isDarkMode={isDarkMode} />
+          <DailyQuote isDarkMode={isDarkMode} />
+          <PopularMeditation isDarkMode={isDarkMode} />
+          <DailyMeditation isDarkMode={isDarkMode} />
         </View>
       </ScrollView>
     </SafeAreaView>

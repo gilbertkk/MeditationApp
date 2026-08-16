@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { COLORS } from "../constants";
 
-const DailyQuote = () => {
+const DailyQuote = ({ isDarkMode }) => {
   const [quote, setQuote] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -27,12 +28,28 @@ const DailyQuote = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? COLORS.darkBackground
+            : COLORS.lightWhite,
+        },
+      ]}
+    >
       {loading ? (
         <ActivityIndicator size="small" color="#0000ff" />
       ) : (
         <>
-          <Text style={styles.quoteText}>"{quote}"</Text>
+          <Text
+            style={[
+              styles.quoteText,
+              { color: isDarkMode ? COLORS.lightWhite : COLORS.darkText },
+            ]}
+          >
+            "{quote}"
+          </Text>
         </>
       )}
     </View>

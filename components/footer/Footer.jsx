@@ -2,9 +2,9 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./Footer.style";
-import { icons } from "../../constants";
+import { COLORS, icons } from "../../constants";
 
-const Footer = ({ data }) => {
+const Footer = ({ data, isDarkMode }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const checkIfFavorite = async () => {
@@ -40,7 +40,16 @@ const Footer = ({ data }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? COLORS.darkBackground
+            : COLORS.lightWhite,
+        },
+      ]}
+    >
       <TouchableOpacity style={styles.likeBtn} onPress={handleFavoriteToggle}>
         <Image
           source={isFavorite ? icons.heartFilled : icons.heartOutline}

@@ -1,13 +1,23 @@
 import { Image, TouchableOpacity, StyleSheet, View } from "react-native";
 import { COLORS, SIZES, icons } from "../constants";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../providers/ThemeProvider";
 
 const ScreenHeaderBtn = ({ detailPage, handleShare }) => {
   const navigation = useNavigation();
-  console.log(detailPage);
+  const { theme } = useTheme();
+
   return (
     <>
-      <View style={styles.btn}>
+      <View
+        style={[
+          styles.btn,
+          {
+            backgroundColor:
+              theme === "dark" ? COLORS.darkBackground : COLORS.lightWhite,
+          },
+        ]}
+      >
         <TouchableOpacity
           style={styles.btnContainer}
           onPress={() => navigation.navigate("Home")}

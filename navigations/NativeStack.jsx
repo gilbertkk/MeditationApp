@@ -3,18 +3,17 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import HomeScreen from "../screens/HomeScreen";
 import MeditationDetails from "../Meditation-details/[id]";
-import { AuthContext } from "../providers/AuthProvider";
-import { useContext } from "react";
+import { useAuth } from "../providers/AuthProvider";
 import { ActivityIndicator } from "react-native";
 import Favourites from "../screens/settings/Favourites";
-import Setting from "../screens/settings/Setting";
 import DailyReminders from "../screens/settings/DailyReminders";
 import Settings from "../screens/Settings";
+import ThemeChange from "../screens/settings/ThemeChange";
 
-const Stack = createNativeStackNavigator();
+export const Stack = createNativeStackNavigator();
 
 const NativeStack = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return (
     <Stack.Navigator
@@ -35,7 +34,7 @@ const NativeStack = () => {
             component={MeditationDetails}
           />
           <Stack.Screen name="Settings" component={Settings} />
-          <Stack.Screen name="ThemeChange" component={Setting} />
+          <Stack.Screen name="ThemeChange" component={ThemeChange} />
           <Stack.Screen name="Favourites" component={Favourites} />
           <Stack.Screen name="DailyReminders" component={DailyReminders} />
         </>

@@ -16,12 +16,15 @@ import { MeditationTopDisplay, About, Footer, Tabs } from "../components";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 import { COLORS, icons, SIZES } from "../constants";
 import useFetch from "../hook/useFetch";
+import { useTheme } from "../providers/ThemeProvider";
 
 const tabs = ["About", "Instructions"];
 
 const MeditationDetails = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
 
   //const params = useGlobalSearchParams();
   const params = route.params;
@@ -40,6 +43,15 @@ const MeditationDetails = () => {
     setRefreshing(false);
   }, []);
 
+  const themeStyles = {
+    container1: {
+      backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
+    },
+    text1: {
+      color: isDarkMode ? COLORS.lightText : COLORS.darkText,
+    },
+  };
+
   // Display the content of either About or Instructions tab.
   const displayTabContent = () => {
     if (activeTab === "About") {
@@ -47,12 +59,15 @@ const MeditationDetails = () => {
         <About
           title={meditationItem.title}
           info={meditationItem.description ?? "No data provided"}
+          isDarkMode={isDarkMode}
         />
       );
     } else if (activeTab === "Instructions") {
       return (
-        <View style={styles.specificsContainer}>
-          <Text style={styles.specificsTitle}>Instructions:</Text>
+        <View style={[styles.specificsContainer, themeStyles.container1]}>
+          <Text style={[styles.specificsTitle, themeStyles.text1]}>
+            Instructions:
+          </Text>
           <View style={styles.pointsContainer}>
             {(meditationItem.instructions ?? ["N/A"]).map((item, index) => (
               <View style={styles.pointWrapper} key={index}>
@@ -82,7 +97,12 @@ const MeditationDetails = () => {
 
   /** Return JSX statement */
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
+      }}
+    >
       <ScreenHeaderBtn detailPage={true} handleShare={onShare} />
 
       <ScrollView
@@ -104,12 +124,14 @@ const MeditationDetails = () => {
               meditationTitle={meditationItem.title}
               duration={meditationItem.duration}
               target={meditationItem.target}
+              isDarkMode={isDarkMode}
             />
 
             <Tabs
               tabs={tabs}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
+              isDarkMode={isDarkMode}
             />
 
             {displayTabContent()}
@@ -117,7 +139,7 @@ const MeditationDetails = () => {
         )}
       </ScrollView>
 
-      <Footer data={meditationItem} />
+      <Footer data={meditationItem} isDarkMode={isDarkMode} />
     </SafeAreaView>
   );
 };

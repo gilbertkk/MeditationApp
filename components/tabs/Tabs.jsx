@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TouchableOpacity, FlatList, Text, View } from "react-native";
 
 import styles from "./Tabs.style";
-import { SIZES } from "../../constants";
+import { COLORS, SIZES } from "../../constants";
 
 function TabButton({ name, activeTab, onHandleSearchType }) {
   return (
@@ -15,9 +15,18 @@ function TabButton({ name, activeTab, onHandleSearchType }) {
   );
 }
 
-const Tabs = ({ tabs, activeTab, setActiveTab }) => {
+const Tabs = ({ tabs, activeTab, setActiveTab, isDarkMode }) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isDarkMode
+            ? COLORS.darkBackground
+            : COLORS.lightWhite,
+        },
+      ]}
+    >
       <FlatList
         data={tabs}
         horizontal

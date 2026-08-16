@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Image,
@@ -16,7 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { COLORS, icons, SHADOWS, SIZES } from "../constants";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { AuthContext } from "../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -29,7 +29,7 @@ const validationSchema = Yup.object({
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const { login, isLoading } = useContext(AuthContext);
+  const { login, isLoading } = useAuth();
 
   if (isLoading) {
     return (

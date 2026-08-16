@@ -11,7 +11,7 @@ import {
 import { COLORS, FONT, SIZES, SHADOWS } from "../constants";
 import useFetch from "../hook/useFetch";
 
-const DailyMeditation = ({ meditations }) => {
+const DailyMeditation = ({ meditations, isDarkMode }) => {
   const navigation = useNavigation();
 
   //   const { isLoading, error, bestMeditations } = useFetch("search", {
@@ -29,7 +29,14 @@ const DailyMeditation = ({ meditations }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Daily Meditation</Text>
+        <Text
+          style={[
+            styles.headerTitle,
+            { color: isDarkMode ? COLORS.lightText : COLORS.darkText },
+          ]}
+        >
+          Daily Meditation
+        </Text>
       </View>
 
       <View style={styles.cardsContainer}>

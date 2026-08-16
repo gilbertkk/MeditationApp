@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { COLORS, FONT, icons, SHADOWS, SIZES } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
-import { AuthContext } from "../providers/AuthProvider";
+import { useAuth } from "../providers/AuthProvider";
 
 const Settings = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -34,7 +34,7 @@ const Settings = () => {
     },
   ];
 
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuth();
 
   const loadUserDetails = async () => {
     const user = await AsyncStorage.getItem("userDetails");
