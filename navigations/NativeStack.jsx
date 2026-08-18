@@ -36,7 +36,11 @@ const NativeStack = () => {
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="ThemeChange" component={ThemeChange} />
           <Stack.Screen name="Favourites" component={Favourites} />
-          <Stack.Screen name="DailyReminders" component={DailyReminders} />
+          <Stack.Screen
+            name="DailyReminders"
+            component={DailyReminders}
+            options={{ headerTitle: "Daily Reminders" }}
+          />
         </>
       )}
     </Stack.Navigator>
