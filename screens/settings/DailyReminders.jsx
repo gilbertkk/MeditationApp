@@ -178,11 +178,23 @@ const DailyReminders = () => {
           onChangeText={setManualTime}
           keyboardType="numeric"
           maxLength={5}
-          style={styles.input}
+          style={styles.input(isDarkMode)}
         />
 
-        <Text style={styles.selected}>Date: {selectedDate || "None"}</Text>
-        <Text style={styles.selected}>
+        <Text
+          style={[
+            styles.selected,
+            { color: isDarkMode ? COLORS.lightWhite : COLORS.primary },
+          ]}
+        >
+          Date: {selectedDate || "None"}
+        </Text>
+        <Text
+          style={[
+            styles.selected,
+            { color: isDarkMode ? COLORS.lightWhite : COLORS.primary },
+          ]}
+        >
           Time:{" "}
           {manualTime ||
             selectedTime.toLocaleTimeString([], {
@@ -195,11 +207,22 @@ const DailyReminders = () => {
           <Text style={styles.buttonText}>Add Reminder</Text>
         </TouchableOpacity>
 
-        <Text style={styles.reminderHeader}>All Reminders:</Text>
+        <Text
+          style={[
+            styles.reminderHeader,
+            { color: isDarkMode ? COLORS.lightWhite : COLORS.primary },
+          ]}
+        >
+          All Reminders:
+        </Text>
         {reminders.length > 0 ? (
           reminders.map((rem) => <Reminder key={rem.id} item={rem} />)
         ) : (
-          <Text>No reminders yet.</Text>
+          <Text
+            style={{ color: isDarkMode ? COLORS.lightWhite : COLORS.primary }}
+          >
+            No reminders yet.
+          </Text>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -214,13 +237,14 @@ const styles = StyleSheet.create({
     marginVertical: SIZES.small,
   },
   description: { color: COLORS.lightWhite, fontWeight: "bold" },
-  date: { color: COLORS.darkText, fontSize: SIZES.small },
-  input: {
+  date: { color: COLORS.lightText, fontSize: SIZES.small },
+  input: (isDarkMode) => ({
     borderColor: COLORS.primary,
     borderWidth: 1,
     padding: SIZES.small,
     marginVertical: SIZES.small,
-  },
+    color: isDarkMode ? COLORS.lightWhite : COLORS.darkText,
+  }),
   selected: {
     fontSize: SIZES.medium,
     marginVertical: SIZES.small,

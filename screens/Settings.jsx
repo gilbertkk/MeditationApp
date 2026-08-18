@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 import { useAuth } from "../providers/AuthProvider";
+import { useTheme } from "../providers/ThemeProvider";
 
 const Settings = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -35,6 +36,8 @@ const Settings = () => {
   ];
 
   const { logout } = useAuth();
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
 
   const loadUserDetails = async () => {
     const user = await AsyncStorage.getItem("userDetails");
@@ -53,17 +56,30 @@ const Settings = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
+      }}
+    >
       <ScreenHeaderBtn />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ flex: 1, padding: SIZES.medium }}>
+        <View
+          style={{
+            flex: 1,
+            padding: SIZES.medium,
+            backgroundColor: isDarkMode
+              ? COLORS.darkBackground
+              : COLORS.lightWhite,
+          }}
+        >
           <View style={{ width: "100%" }} testID="userDetails">
             {userDetails && (
               <Text
                 style={{
                   fontFamily: FONT.regular,
                   fontSize: SIZES.large,
-                  color: COLORS.secondary,
+                  color: isDarkMode ? COLORS.lightWhite : COLORS.secondary,
                 }}
               >
                 Hello {JSON.parse(userDetails).username}!
@@ -73,7 +89,7 @@ const Settings = () => {
               style={{
                 fontFamily: FONT.bold,
                 fontSize: SIZES.xLarge,
-                color: COLORS.primary,
+                color: isDarkMode ? COLORS.lightText : COLORS.primary,
                 marginTop: 2,
               }}
             >

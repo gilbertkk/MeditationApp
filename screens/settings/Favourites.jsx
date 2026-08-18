@@ -12,10 +12,13 @@ import DailyMeditation from "../../components/DailyMeditation";
 import { useFocusEffect } from "@react-navigation/native";
 import ScreenHeaderBtn from "../../components/ScreenHeaderBtn";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "../../providers/ThemeProvider";
 
 const Favourites = () => {
   const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
 
   const loadFavorites = async () => {
     try {
@@ -39,7 +42,7 @@ const Favourites = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: COLORS.darkBackground,
+        backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -56,7 +59,7 @@ const Favourites = () => {
               <Text
                 style={{
                   textAlign: "center",
-                  color: "#FF4500",
+                  color: isDarkMode ? COLORS.lightWhite : "#FF4500",
                   fontWeight: "bold",
                 }}
               >

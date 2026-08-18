@@ -10,8 +10,11 @@ import {
 } from "react-native";
 import { COLORS, FONT, SIZES, SHADOWS } from "../constants";
 import useFetch from "../hook/useFetch";
+import { useTheme } from "../providers/ThemeProvider";
 
-const DailyMeditation = ({ meditations, isDarkMode }) => {
+const DailyMeditation = ({ meditations }) => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === "dark";
   const navigation = useNavigation();
 
   //   const { isLoading, error, bestMeditations } = useFetch("search", {
